@@ -1,0 +1,70 @@
+{
+    "name": "Basic Workflow",
+    "description": "A basic workflow demonstrating how to send emails based on a csv file.",
+    "version": 0.1,
+    "language": "python",
+    "inputs": 
+    [
+        {
+            "name": "input",
+            "format": "csv",
+            "path": "./tests/assets/input.csv"
+        },
+        {
+            "name": "template",
+            "format": "jinja",
+            "path": "./template.jinja"
+        }
+    ],
+    "outputs":
+    [
+        {
+            "name": "output",
+            "format": "csv",
+            "path": "./output.csv"
+        }
+    ],
+    "steps":
+    [
+        {
+            "name": "Add a Column",
+            "description": "Add column to the csv to record the date the email is sent",
+            "action": "AddColumn",
+            "inputs": ["input"],
+            "outputs": ["working_copy"],
+            "column": "email_sent",
+            "default": ""
+        },
+        {
+            "name": "Send Emails",
+            "description": "Send an email to each of the recipients on the list.",
+            "action": "ForEach",
+            "strategy": "sequential",
+            "dataset": "input",
+            "steps": 
+            [
+                {
+                    "name": "Send Email",
+                    "description": "Send an email based on a template to a specific recipient.",
+                    "action": "SendEmail",
+                    "to": { "field": "email" },
+                    "template": "template"
+                },
+                {
+                    "name": "Mark as Sent",
+                    "description": "Mark the date that the email was sent.",
+                    "action": "Update",
+                    "field": "email_sent",
+                    "value": { "expr": "today()" }
+                }
+            ]
+        },
+        {
+            "name": "Save Output",
+            "description": "Save the output so that we have a record of the emails that were sent.",
+            "action": "Save",
+            "dataset": "working_copy",
+            "output": "output"
+        }
+    ]
+}

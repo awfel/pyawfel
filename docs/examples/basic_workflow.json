@@ -1,0 +1,66 @@
+{
+    "name": "Basic Workflow",
+    "description": "A basic workflow demonstrating how to send emails based on a csv file.",
+    "version": 0.1,
+    "inputs": 
+    [
+        {
+            "name": "input",
+            "type": "csv",
+            "path": "./input.csv"
+        },
+        {
+            "name": "template",
+            "type": "jinja",
+            "path": "./template.jinja"
+        }
+    ],
+    "outputs":
+    [
+        {
+            "name": "output",
+            "type": "csv",
+            "path": "./output.csv"
+        }
+    ],
+    "steps":
+    [
+        {
+            "name": "Add a column",
+            "description": "Add the date processed column to the csv",
+            "type": "AddColumn",
+            "inputs": ["input"],
+            "outputs": ["working_copy"],
+            "column": "date_processed",
+            "default": ""
+        },
+        {
+            "name": "Send Emails",
+            "description": "Send an email to each of the recipients on the list.",
+            "type": "ForEach",
+            "strategy": "parallel",
+            "inputs":
+            [
+                "working_copy",
+                "template"
+            ],
+            "steps": 
+            [
+                {
+                    "name": "Send Email",
+                    "description": "Send an email based on a template to a specific recipient.",
+                    "type": "SendEmail",
+                    "to": { "field": "email" },
+                    "template": "template"
+                },
+                {
+                    "name": "Mark as Sent",
+                    "description": "Mark the date that the email was sent.",
+                    "type": "UpdateDate",
+                    "field": "date_processed",
+                    "value": { "function": "today" }
+                }
+            ]
+        }
+    ]
+}

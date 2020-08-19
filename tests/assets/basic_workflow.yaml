@@ -1,0 +1,51 @@
+---
+# A big advantage of YAML over JSON is that it allows us to add comments
+name: Basic Workflow
+description: A basic worklow demonstraticng how to send email based on a csv file.
+version: 0.1
+inputs:
+    - name: input
+      type: csv
+      path: ./tests/assets/input.csv
+      
+    - name: template
+      type: jinja
+      path: /template.jinja
+
+ouputs:
+    - name: output
+      type: csv
+      path: ./output.csv
+
+steps:
+    - name: Add a Column
+      description: Add column to the csv to record the date the email is sent
+      type: AddColumn
+      inputs: [input]
+      outputs: [working_copy]
+      column: email_sent
+      default: ""
+    
+    - name: Send emails
+      description: Send an email to each of the recipients
+      type: ForEach
+      strategy: sequential
+      dataset: working_copy
+      steps:
+        - name: Send Email
+          description: Send an email based on a template to a specific recipient.
+          type: SendEmail
+          to: { field: email }
+          template: template
+
+        - name: Mark as sent
+          description: Mark the date that the email was sent
+          type: Update
+          field: email_sent
+          value: { function: today }
+        
+    - name: Save output
+      description: Save the output so that we have a record of the emails that we sent
+      type: Save
+      dataset: working_copy
+      output: output
