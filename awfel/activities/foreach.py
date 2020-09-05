@@ -11,6 +11,7 @@ class ForEachActivity(BaseActivity):
                  dataset=None,
                  strategy="sequential",
                  workflow=None,
+                 steps=None,
                  *args,
                  **kwargs):
         """An activity to handle iterating throught a collection of objects
@@ -38,8 +39,11 @@ class ForEachActivity(BaseActivity):
         self.id = id or secrets.token_hex(16)
         self.name = name
         self.description = description
+        print(workflow.inputs)
         self.dataset = workflow.inputs[dataset]
         self.workflow = workflow
+        self.steps = steps
+        print(f'in foreach constructor {self.steps}')
 
         if strategy.lower() not in ['sequential', 'serial', 'parallel']:
             raise ValueError((f"Strategy on {self.name} ForEach must be one "
@@ -49,10 +53,13 @@ class ForEachActivity(BaseActivity):
     def run(self):
         from awfel.actioncontainer import ActionContainer
 
-        for index, item in enumerate(self.dataset):
+        dataset = self.dataset.value
+        for index, item in enumerate(dataset):
             name = f"{self.name}_{index}"
             kwargs = {'steps': self.steps}
-            container = ActionContainer(name=name, **kwargs)
+            container = ActionContainer(name=name,
+                                        actions=self.workflow.actions,
+                                        **kwargs)
             # The way we're handling the inputs isn't great, but we make a copy
             # to avoid mutating the originals.
             container.inputs = self.workflow.inputs.copy()
@@ -63,4 +70,4 @@ class ForEachActivity(BaseActivity):
                 raise NotImplementedError()
 
             container.start()
-            self.dataset[index] = container.inputs['item']
+            # self.dataset[index] = container.inputs['item']

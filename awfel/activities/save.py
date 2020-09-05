@@ -1,4 +1,3 @@
-from csv import DictWriter
 import logging
 
 from awfel.activities.base import BaseActivity
@@ -19,14 +18,12 @@ class SaveActivity(BaseActivity):
         self.description = description
         self.dataset = dataset
         self.output = output
-        self.format = output.get('type', 'csv')
+        self.format = kwargs.get('format', 'csv')
         self.workflow = workflow
 
     def run(self):
-        data = self.workflow.inputs[self.dataset]
-        fieldnames = data.keys()
-        with open(self.output['path'], 'w') as f:
-            writer = DictWriter(f, fieldnames=fieldnames)
-            writer.writerows(data)
+        data = self.workflow.inputs[self.dataset].value
+        output = self.workflow.outputs[self.output]
+        output.write(data)
 
-        log.info(f"{self.dataset} saved as {self.output['path']}")
+        log.info(f"{self.dataset} saved as {output.path}")

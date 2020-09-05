@@ -1,6 +1,4 @@
 from csv import DictReader
-# import os
-
 from .base import BaseInput
 
 
@@ -12,9 +10,16 @@ class CSVInput(BaseInput):
         self.path = path
         self._value = None
 
+    @property
     def value(self):
+        # resolve only when and if called.
         if self._value is None:
             with open(self.path, 'rt') as f:
-                self._value = DictReader(f.readlines())
+                return list(DictReader(f))
+                print(self._value)
 
         return self._value
+
+    @value.setter
+    def value(self, value):
+        self._value = value

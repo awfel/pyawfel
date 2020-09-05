@@ -13,7 +13,7 @@
         {
             "name": "template",
             "format": "jinja",
-            "path": "./template.jinja"
+            "path": "./tests/assets/template.jinja"
         }
     ],
     "outputs":
@@ -21,7 +21,7 @@
         {
             "name": "output",
             "format": "csv",
-            "path": "./output.csv"
+            "path": "./tests/assets/output.csv"
         }
     ],
     "steps":
@@ -30,8 +30,8 @@
             "name": "Add a Column",
             "description": "Add column to the csv to record the date the email is sent",
             "action": "AddColumn",
-            "inputs": ["input"],
-            "outputs": ["working_copy"],
+            "dataset": "input",
+            "output": "working_copy",
             "column": "email_sent",
             "default": ""
         },
@@ -40,7 +40,7 @@
             "description": "Send an email to each of the recipients on the list.",
             "action": "ForEach",
             "strategy": "sequential",
-            "dataset": "input",
+            "dataset": "working_copy",
             "steps": 
             [
                 {
@@ -55,7 +55,7 @@
                     "description": "Mark the date that the email was sent.",
                     "action": "Update",
                     "field": "email_sent",
-                    "value": { "expr": "today()" }
+                    "value": { "expr": "datetime.today()" }
                 }
             ]
         },

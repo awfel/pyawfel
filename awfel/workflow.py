@@ -2,18 +2,25 @@ import json
 import logging
 import re
 import secrets
-import time
 
 from awfel.actioncontainer import ActionContainer
 from awfel.errors import WorkflowError
-from awfel.inputs import BaseInput, CSVInput
+from awfel.inputs import resolve_input
+from awfel.outputs import resolve_output
 
 log = logging.getLogger(__name__)
 activity_re = re.compile(r'^\w+Activity$')
 
 
 def load_from_json(path):
-    """Load a workflow from a JSON file."""
+    """Load a workflow from a JSON file.
+
+    Creates a new :class:Workflow from a JSON file and return it.
+
+    :param path: The path to the definition file.
+    :type path: int, path
+    :returns: A :class:Workflow object
+    """
     with open(path, 'rt', encoding='utf8') as f:
         kwargs = json.load(f)
     return Workflow(**kwargs)
@@ -26,6 +33,8 @@ class Workflow(object):
                  description=None,
                  steps=None,
                  inputs=None,
+                 outputs=None,
+                 *args,
                  **kwargs):
         """Workflow is the container that executes activities according to the
         strategy/order in the definition.
@@ -49,30 +58,28 @@ class Workflow(object):
             if input_['name'] == 'item':
                 msg = ("The name 'item' is reserved for use inside an awfel "
                        "workflow. Provide a different name for the input.")
+                log.Error(msg)
                 raise WorkflowError(msg)
             if input_['name'] in self._inputs:
                 msg = (f"The name '{input_['name']}' already exists in the "
                        "workflow inputs. Each input for a worflow must have "
                        "a unique name.")
+                log.Error(msg)
                 raise KeyError(msg)
             key = input_['name']
-            if input_['format'] == 'csv':
-                log.info("reading a csv input.")
-                value = CSVInput(**input_).value()
-            else:
-                value = BaseInput(input_)
+            print(input_)
+            value = resolve_input(**input_)
             self._inputs[key] = value
 
-        # Build the activities list
-        self.steps = ActionContainer(steps=steps)
-        # self.activities = dict()
-        # for step in kwargs['steps']:
-        #     if step['name'] in self.activities:
-        #         msg = (f"The name '{step['name']}' already exists in the "
-        #                "workflow steps. Each step must have a unique name.")
-        #         raise WorkflowError(msg)
-        #     self.activities[step['name']] = step.copy()
-        # self._activities = deque(self.activities.values())
+        # register the outputs
+        self._outputs = dict()
+        for output in outputs:
+            key, value = output['name'], resolve_output(**output)
+            self._outputs[key] = value
+
+        self.steps = ActionContainer(steps=steps,
+                                     inputs=self._inputs,
+                                     outputs=self._outputs)
 
         log.debug(f"Workflow '{self.name}' succesfully created")
 
@@ -86,32 +93,33 @@ class Workflow(object):
         if self._running and not force:
             msg = (f"Workflow '{self.name}' with id {self.id} is already "
                    "running.")
+            log.error(msg)
             raise WorkflowError(msg)
 
         try:
             self.steps.start()
         except Exception as err:
-            log.error('An error happened', err)
+            log.error('Unable to start workflow', err)
         else:
             self.steps.stop()
 
-    def next(self):
-        """Move and start the next step in the activities."""
-        activity = self._activities.popleft()
-        print(activity)
-        key = activity['action'].lower()
-        action = self.actions[key](workflow=self, **activity)
-        start_time = time.perf_counter()
-        action.perform()
-        run_time = time.perf_counter() - start_time
-        log.info(f"{activity.name} completed in {run_time}ms.")
+    # def next(self):
+    #     """Move and start the next step in the activities."""
+    #     activity = self._activities.popleft()
+    #     print(activity)
+    #     key = activity['action'].lower()
+    #     action = self.actions[key](workflow=self, **activity)
+    #     start_time = time.perf_counter()
+    #     action.perform()
+    #     run_time = time.perf_counter() - start_time
+    #     log.info(f"{activity.name} completed in {run_time}ms.")
 
     def stop(self):
         """Stop the current run of the workflow.
 
         .. note:: If the workflow is not running this does nothing.
         """
-        log.info(f"Stop called on the {self.name} ({self.id})")
+        log.info(f"Stop called on the {self.name} ({self.id}) workflow")
         self._running = False
 
     @property

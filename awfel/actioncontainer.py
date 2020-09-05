@@ -3,6 +3,7 @@ import logging
 import re
 import time
 from collections import deque
+import secrets
 
 import awfel.activities
 from awfel.errors import WorkflowError
@@ -27,6 +28,8 @@ class ActionContainer(object):
                  name=None,
                  inputs=None,
                  steps=None,
+                 actions=None,
+                 outputs=None,
                  *args,
                  **kwargs):
         """A container for actions to be performed.
@@ -34,10 +37,13 @@ class ActionContainer(object):
         This is not designed to be used directly, but should instead be
         implementated by another class. For example, a workflow.
         """
-        self.actions = _get_actions()
+        self.name = name
+        self.id = id or secrets.token_hex(16)
+        self.actions = actions or _get_actions()
         self._running = False
 
         self.inputs = inputs or dict()
+        self.outputs = outputs or dict()
 
         self.activities = dict()
         for step in steps:

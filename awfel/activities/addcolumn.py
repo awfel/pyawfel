@@ -1,5 +1,6 @@
 import logging
 import secrets
+import copy
 
 from awfel.activities.base import BaseActivity
 
@@ -11,6 +12,7 @@ class AddColumnActivity(BaseActivity):
                  id=None,
                  name=None,
                  description=None,
+                 dataset=None,
                  column=None,
                  default=None,
                  workflow=None,
@@ -20,7 +22,8 @@ class AddColumnActivity(BaseActivity):
         self.name = name
         self.description = description
         self.inputs = workflow.inputs
-        self.outputs = kwargs['outputs']
+        self.dataset = dataset
+        self.output = kwargs.get('output', None)
         self.column = column
         self.default = default
         self.workflow = workflow
@@ -28,11 +31,13 @@ class AddColumnActivity(BaseActivity):
     def run(self):
         # for each of the items in inputs add a property with the default.
         log.info("AddColumnActivity called.")
-        for input_ in self.inputs:
-            # This needs to handle inputs better...
-            print(input_)
-            dataset = self.workflow.inputs[input_]
-            for item in dataset:
-                if self.column in item:
-                    raise KeyError(f"{self.column} already exists.")
-                item[self.column] = self.default
+        dataset = self.workflow.inputs[self.dataset].value
+        print(f'from addcolumn:\n{dataset}')
+        for item in dataset:
+            if self.column in item:
+                raise KeyError(f"{self.column} already exists.")
+            item[self.column] = self.default
+
+        result = copy.deepcopy(self.workflow.inputs[self.dataset])
+        result.value = dataset
+        self.workflow.inputs[self.output] = result
