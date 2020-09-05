@@ -7,6 +7,7 @@ if __name__ == "__main__":
 
     for i, node in enumerate(data.get('steps')):
         print(f"{i+1}) {node['name']}")
-        if steps := node.get('steps'):
+        steps = node.get('steps')
+        if steps:
             for j, node in enumerate(steps):
                 print(f"  {i+1}.{j+1}) {node.get('name')}")
