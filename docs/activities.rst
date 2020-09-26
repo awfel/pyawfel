@@ -19,14 +19,13 @@ Control Structures
 Control structures allow you to define the flow of data and order of
 activities in your workflows.
 
-.. method:: ForEachActivity(self, name, description, item_name="item",
-                **kwargs)
+.. class:: ForEachActivity(self, name, description, item_name="item", *args, **kwargs)
 
     For each item in the specified iterable perform the actions. The item is
     always provided as item unless the item_name is specified in the
     arguments.
 
-.. method:: IfActivity(self, name, description, conditions, **kwargs)
+.. class:: IfActivity(self, name, description, conditions, *args, **kwargs)
 
     Control structure that allows you to test for one or more conditions and
     then performs the action.
