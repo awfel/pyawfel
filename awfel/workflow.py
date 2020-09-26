@@ -2,6 +2,8 @@ import json
 import logging
 import re
 import secrets
+import os
+from pathlib import Path
 
 from awfel.actioncontainer import ActionContainer
 from awfel.errors import WorkflowError
@@ -10,6 +12,7 @@ from awfel.outputs import resolve_output
 
 log = logging.getLogger(__name__)
 activity_re = re.compile(r'^\w+Activity$')
+cwd = os.getenv('AWFEL_BASEPATH', os.getcwd())
 
 
 def load_from_json(path):
@@ -21,7 +24,7 @@ def load_from_json(path):
     :type path: int, path
     :returns: A :class:Workflow object
     """
-    with open(path, 'rt', encoding='utf8') as f:
+    with open(Path().joinpath(cwd, path), 'rt', encoding='utf8') as f:
         kwargs = json.load(f)
     return Workflow(**kwargs)
 
