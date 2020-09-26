@@ -9,13 +9,10 @@ accepted_formats = ['csv']
 
 class CSVOutput(BaseOutput):
     def __init__(self, name=None, format=None, path=None, *args, **kwargs):
-        if name is None:
-            raise WorkflowError("Name must be defined for the ouput")
-        self.name = name
-
         if format.lower() not in accepted_formats:
             raise WorkflowError(f'{format} is not a recognized output format.')
-        self.format = format
+
+        super().__init__(name=name, format=format)
 
         directory = os.path.dirname(path)
         if not os.path.exists(directory):
