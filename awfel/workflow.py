@@ -106,17 +106,6 @@ class Workflow(object):
         else:
             self.steps.stop()
 
-    # def next(self):
-    #     """Move and start the next step in the activities."""
-    #     activity = self._activities.popleft()
-    #     print(activity)
-    #     key = activity['action'].lower()
-    #     action = self.actions[key](workflow=self, **activity)
-    #     start_time = time.perf_counter()
-    #     action.perform()
-    #     run_time = time.perf_counter() - start_time
-    #     log.info(f"{activity.name} completed in {run_time}ms.")
-
     def stop(self):
         """Stop the current run of the workflow.
 
