@@ -1,9 +1,9 @@
 import inspect
 import logging
 import re
+import secrets
 import time
 from collections import deque
-import secrets
 
 import awfel.activities
 from awfel.errors import WorkflowError

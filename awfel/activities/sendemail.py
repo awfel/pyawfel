@@ -1,7 +1,7 @@
 import logging
-from smtplib import SMTP
-from email.message import EmailMessage
 import secrets
+from email.message import EmailMessage
+from smtplib import SMTP
 
 from awfel.activities.base import BaseActivity
 

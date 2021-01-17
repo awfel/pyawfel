@@ -1,5 +1,6 @@
-from .base import BaseInput
 from jinja2 import Template
+
+from .base import BaseInput
 
 
 class JinjaInput(BaseInput):

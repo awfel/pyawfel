@@ -1,8 +1,8 @@
 import json
 import logging
+import os
 import re
 import secrets
-import os
 from pathlib import Path
 
 from awfel.actioncontainer import ActionContainer

@@ -1,6 +1,6 @@
+import copy
 import logging
 import secrets
-import copy
 
 from awfel.activities.base import BaseActivity
 

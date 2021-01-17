@@ -1,5 +1,5 @@
-import tempfile
 import logging
+import tempfile
 
 log = logging.getLogger(__name__)
 

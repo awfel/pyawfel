@@ -3,6 +3,7 @@ from .base import BaseInput
 from .csv import CSVInput
 from .jinja import JinjaInput
 
+
 def resolve_input(*args, **kwargs):
     """Returns a dictionary of all of the input types and the function to
     initialize them.

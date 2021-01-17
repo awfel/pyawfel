@@ -1,8 +1,9 @@
 import csv
 import os
 
-from .base import BaseOutput
 from awfel.errors import WorkflowError
+
+from .base import BaseOutput
 
 accepted_formats = ['csv']
 

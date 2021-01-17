@@ -1,4 +1,5 @@
 from csv import DictReader
+
 from .base import BaseInput
 
 
