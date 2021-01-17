@@ -5,7 +5,7 @@ with open('./README.md', 'rt', encoding='utf8') as f:
 
 setup(
     name="awfel",
-    version="0.0.1.pre",
+    version="0.0.1-dev",
     packages=find_packages(),
     authors="James Warne",
     author_email="bebleo@yahoo.com",
