@@ -30,7 +30,7 @@ pytz==2020.1
 requests==2.24.0
 semver==2.10.2
 six==1.15.0
-smtpdfix==0.2.5
+smtpdfix==0.2.6
 snowballstemmer==2.0.0
 Sphinx==3.2.1
 sphinx-rtd-theme==0.5.0
