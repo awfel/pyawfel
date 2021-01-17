@@ -1,6 +1,6 @@
 import pytest
 
-from smtpdfix import smtpd  # noqa: F401 (unused import)
+pytest_plugins = "smtpdfix"
 
 
 @pytest.fixture
