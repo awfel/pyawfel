@@ -11,6 +11,7 @@ flake8==3.8.3
 idna==2.10
 imagesize==1.2.0
 iniconfig==1.0.1
+isort==5.7.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
 mccabe==0.6.1
