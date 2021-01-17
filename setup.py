@@ -19,7 +19,7 @@ setup(
         "test": [
             "pytest",
             "pytest-cov",
-            "smtpdfix >= 0.2.4"
+            "smtpdfix >= 0.2.5"
         ],
         "lint": ["flake8", "isort"],
         "docs": ["sphinx", "sphinx_rtd_theme"]
