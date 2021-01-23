@@ -27,7 +27,7 @@ pytest==6.2.1
 pytest-cov==2.10.1
 python-dotenv==0.15.0
 pytz==2020.5
-requests==2.24.0
+requests==2.25.1
 semver==2.13.0
 six==1.15.0
 smtpdfix==0.2.6
