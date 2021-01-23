@@ -8,7 +8,7 @@ chardet==3.0.4
 coverage==5.2.1
 docutils==0.16
 flake8==3.8.4
-idna==2.10
+idna>=2.5,<3
 imagesize==1.2.0
 iniconfig==1.1.1
 isort==5.7.0
