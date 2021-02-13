@@ -2,8 +2,6 @@ import os
 
 import pytest
 
-pytest_plugins = "smtpdfix"
-
 
 @pytest.fixture
 def basic_workflow_path():
