@@ -12,3 +12,8 @@ def basic_workflow_path():
     )
     yield files
     os.remove(files[2])  # Delete output.csv after test has run
+
+
+class MockWorkflow:
+    """A mock workflow for use in tests."""
+    pass
