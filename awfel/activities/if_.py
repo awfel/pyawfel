@@ -1,4 +1,4 @@
-from awfel.activities import BaseActivity
+from awfel.activities.base import BaseActivity
 
 
 class IfActivity(BaseActivity):
