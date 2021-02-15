@@ -21,8 +21,10 @@ class CustomActivity(BaseActivity):
         self.name = name
         self.description = description
         self._code = code
+        self.workflow = workflow
 
     def run(self):
         """Runs the custom code provided."""
         log.info(f"Run called on '{self.name}' activity")
         raise NotImplementedError()
+        eval(self._code, {})  # Empty dict for locals allow __builtin__ only.
