@@ -21,5 +21,3 @@ class TestBasicWorkflow():
             in_length = sum([1 for row in in_])
             out_length = sum([1 for row in out])
             assert in_length == out_length
-
-        assert len(smtpd.messages) == 3
