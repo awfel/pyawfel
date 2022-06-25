@@ -6,7 +6,7 @@ Python implementation of the awfel library
 Install using pip by runnning:
 
 ```
-pip install -e .[test]
+pip install -e .[dev]
 ```
 
 ### Testing

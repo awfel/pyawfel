@@ -16,7 +16,8 @@ setup(
         "jinja2"
     ],
     extras_require={
-        "test": [
+        "dev": [
+            "pre-commit",
             "pytest",
             "pytest-cov",
             "pytest-mock",
