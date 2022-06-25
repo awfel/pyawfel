@@ -14,7 +14,7 @@ pip install -e .[dev]
 Tests are run using pytest.
 
 ```
-$ pytest --cov
+pytest --cov
 ```
 
 ### Managing depencies
@@ -22,5 +22,5 @@ $ pytest --cov
 A script `fix-requirements.sh` is provided for managing the requirements.txt file listing the dependencies. This will build a requirements.txt file listing only packages needed to run the application. Assuming that the script is being run from the root of the project and that `setup.py` is located in that folder:
 
 ```
-$ bash ./utils/fix-requirements.sh .
+bash ./utils/fix-requirements.sh .
 ```
