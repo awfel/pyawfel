@@ -6,7 +6,7 @@ Introduction
 
 Activities are the building blocks from which Awfel workflows are built.
 
-They exist in two different varieties. The first could be termed atomic 
+They exist in two different varieties. The first could be termed atomic
 activities and are to do things. The others are control structures which allow
 you to tell Awfel how to process your data.
 

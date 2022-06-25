@@ -3,7 +3,7 @@
     "description": "A basic workflow demonstrating how to send emails based on a csv file.",
     "version": 0.1,
     "language": "python",
-    "inputs": 
+    "inputs":
     [
         {
             "name": "input",
@@ -41,7 +41,7 @@
             "action": "ForEach",
             "strategy": "sequential",
             "dataset": "working_copy",
-            "steps": 
+            "steps":
             [
                 {
                     "name": "Send Email",

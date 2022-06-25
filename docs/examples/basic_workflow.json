@@ -2,7 +2,7 @@
     "name": "Basic Workflow",
     "description": "A basic workflow demonstrating how to send emails based on a csv file.",
     "version": 0.1,
-    "inputs": 
+    "inputs":
     [
         {
             "name": "input",
@@ -44,7 +44,7 @@
                 "working_copy",
                 "template"
             ],
-            "steps": 
+            "steps":
             [
                 {
                     "name": "Send Email",

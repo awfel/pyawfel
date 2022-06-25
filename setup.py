@@ -19,6 +19,7 @@ setup(
         "test": [
             "pytest",
             "pytest-cov",
+            "pytest-mock",
             "smtpdfix >= 0.2.7"
         ],
         "lint": ["flake8", "isort"],

@@ -24,6 +24,7 @@ class SaveActivity(BaseActivity):
     def run(self):
         data = self.workflow.inputs[self.dataset].value
         output = self.workflow.outputs[self.output]
-        output.write(data)
+        with open(data, "w") as f:
+            f.write(data)
 
         log.info(f"{self.dataset} saved as {output.path}")

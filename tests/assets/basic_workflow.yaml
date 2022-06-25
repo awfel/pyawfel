@@ -7,7 +7,7 @@ inputs:
     - name: input
       type: csv
       path: ./tests/assets/input.csv
-      
+
     - name: template
       type: jinja
       path: /template.jinja
@@ -25,7 +25,7 @@ steps:
       outputs: [working_copy]
       column: email_sent
       default: ""
-    
+
     - name: Send emails
       description: Send an email to each of the recipients
       type: ForEach
@@ -43,7 +43,7 @@ steps:
           type: Update
           field: email_sent
           value: { function: today }
-        
+
     - name: Save output
       description: Save the output so that we have a record of the emails that we sent
       type: Save
