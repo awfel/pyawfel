@@ -10,7 +10,7 @@ setup(
     authors="James Warne",
     author_email="bebleo@yahoo.com",
     long_description=long_description,
-    python_requires=">= 3.6",
+    python_requires=">= 3.7",
     install_requires=[
         "semver",
         "jinja2"
