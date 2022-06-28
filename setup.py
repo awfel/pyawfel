@@ -21,7 +21,8 @@ setup(
             "pytest",
             "pytest-cov",
             "pytest-mock",
-            "smtpdfix >= 0.2.7"
+            "smtpdfix >= 0.2.7",
+            "tox",
         ],
         "lint": ["flake8", "isort"],
         "docs": ["sphinx", "sphinx_rtd_theme"]
