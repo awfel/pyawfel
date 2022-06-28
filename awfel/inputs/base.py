@@ -1,3 +1,6 @@
+from awfel.errors.workflowerror import WorkflowError
+
+
 class BaseInput(object):
     def __init__(self,
                  name=None,
@@ -19,7 +22,7 @@ class BaseInput(object):
         :type date_fmt: string
         """
         if name is None:
-            raise AttributeError(msg="""Must provide a unique name for each
+            raise WorkflowError(msg="""Must provide a unique name for each
                                         input.""")
         self.name = name
         self.description = description
