@@ -1,6 +1,7 @@
 import logging
 
 from awfel.activities.base import BaseActivity
+from awfel.outputs.csv import CSVOutput
 
 log = logging.getLogger(__name__)
 
@@ -24,7 +25,12 @@ class SaveActivity(BaseActivity):
     def run(self):
         data = self.workflow.inputs[self.dataset].value
         output = self.workflow.outputs[self.output]
-        with open(data, "w") as f:
-            f.write(data)
+
+        if self.format == "csv":
+            csv = CSVOutput("csvout", "csv", output.path)
+            csv.write(data)
+        else:
+            with open(output.path, "w") as f:
+                f.write(str(data))
 
         log.info(f"{self.dataset} saved as {output.path}")
