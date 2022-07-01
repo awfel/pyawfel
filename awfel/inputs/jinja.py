@@ -16,4 +16,3 @@ class JinjaInput(BaseInput):
         """
         with open(self.path, 'rt', encoding='utf8') as f:
             return Template(f.read())
-        raise NotImplementedError()

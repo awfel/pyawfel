@@ -32,7 +32,6 @@ class AddColumnActivity(BaseActivity):
         # for each of the items in inputs add a property with the default.
         log.info("AddColumnActivity called.")
         dataset = self.workflow.inputs[self.dataset].value
-        print(f'from addcolumn:\n{dataset}')
         for item in dataset:
             if self.column in item:
                 raise KeyError(f"{self.column} already exists.")

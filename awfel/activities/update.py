@@ -31,7 +31,6 @@ class UpdateActivity(BaseActivity):
 
     def function(self, value, item):
         if isinstance(value, dict):
-            print(f'***** {value}')
             if 'field' in value.keys():
                 # return the field
                 return item.get(value['field'], '')

@@ -70,7 +70,6 @@ class Workflow(object):
                 log.Error(msg)
                 raise KeyError(msg)
             key = input_['name']
-            print(input_)
             value = resolve_input(**input_)
             self._inputs[key] = value
 

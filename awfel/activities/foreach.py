@@ -39,11 +39,9 @@ class ForEachActivity(BaseActivity):
         self.id = id or secrets.token_hex(16)
         self.name = name
         self.description = description
-        print(workflow.inputs)
         self.dataset = workflow.inputs[dataset]
         self.workflow = workflow
         self.steps = steps
-        print(f'in foreach constructor {self.steps}')
 
         if strategy.lower() not in ['sequential', 'serial', 'parallel']:
             raise ValueError((f"Strategy on {self.name} ForEach must be one "

@@ -19,7 +19,6 @@ def resolve_input(*args, **kwargs):
                         path=kwargs['path'])
 
     if kwargs['format'].lower() == 'jinja':
-        print(kwargs['path'])
         return JinjaInput(name=kwargs['name'],
                           description=kwargs.get('description'),
                           path=kwargs['path'])

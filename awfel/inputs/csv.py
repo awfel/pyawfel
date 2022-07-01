@@ -17,7 +17,6 @@ class CSVInput(BaseInput):
         if self._value is None:
             with open(self.path, 'rt') as f:
                 return list(DictReader(f))
-                print(self._value)
 
         return self._value
 
