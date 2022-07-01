@@ -1,4 +1,5 @@
 import pytest
+
 from awfel.errors.workflowerror import WorkflowError
 from awfel.inputs.base import BaseInput
 
